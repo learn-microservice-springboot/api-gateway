@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: CardService
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+server:
+  port: 9091
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - health
+        - shutdown
+  endpoint:
+    shutdown:
+      access: unrestricted
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    healthcheck:
+      enabled: true
+    service-url:
+      defaultZone: http://localhost:8080/eureka/
+
