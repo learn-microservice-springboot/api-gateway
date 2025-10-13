@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,8 @@ public class LoanController {
 	@Autowired
 	LoanServiceImpl loanServiceImpl;
 
-	@PostMapping("/{loanId}")
-	public ResponseEntity<LoanDTO> getLoanDetails(@RequestParam Long loanId) {
+	@GetMapping("/{loanId}")
+	public ResponseEntity<LoanDTO> getLoanDetails(@PathVariable Long loanId) {
 		return loanServiceImpl.findLoanById(loanId).map(ResponseEntity::ok)
 				.orElseGet(() -> ResponseEntity.notFound().build());
 
@@ -41,7 +42,7 @@ public class LoanController {
 	
 	
 
-	@PostMapping()
+	@PostMapping
 	public ResponseEntity<LoanDTO> createLoan(@RequestBody LoanDTO loanDTO) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(loanServiceImpl.createLoan(loanDTO));
 

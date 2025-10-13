@@ -23,7 +23,7 @@ public class CardController {
 	@Autowired
 	private CardServiceImpl cardServiceImpl;
 
-	@GetMapping("/{id}")
+	@GetMapping("/{cardId}")
 	public ResponseEntity<CardDTO> getCardDetails(@PathVariable Long cardId) {
 		return cardServiceImpl.findCardById(cardId).map(ResponseEntity::ok)
 				.orElseGet(() -> ResponseEntity.notFound().build());
