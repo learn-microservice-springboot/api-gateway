@@ -9,6 +9,13 @@ spring:
             locator:
               enabled: true
               lower-case-service-id: true
+          routes:
+          - id: card-service-route
+            uri: lb://CARDSERVICE
+            predicates:
+            - Path=/api/bankapp/cards/**
+            filters:
+            - RewritePath=/api/bankapp/cards(?<segment>.*), /api/cards${segment}   
 server:
   port: 30723
 
