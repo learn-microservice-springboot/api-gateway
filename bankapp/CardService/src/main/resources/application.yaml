@@ -38,3 +38,6 @@ eureka:
     service-url:
       defaultZone: http://localhost:8080/eureka/
 
+logging:
+  level:
+    com.bankapp.CardService: DEBUG

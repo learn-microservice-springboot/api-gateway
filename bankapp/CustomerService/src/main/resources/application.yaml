@@ -38,3 +38,6 @@ eureka:
       defaultZone: http://localhost:8080/eureka/
     healthcheck:
       enabled: true
+logging:
+  level:
+    com.bankapp.CustomerService: DEBUG

@@ -1,5 +1,8 @@
 package com.bankapp.CustomerService.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,24 +17,28 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import com.bankapp.CustomerService.dto.CustomerDTO;
 import com.bankapp.CustomerService.dto.CustomerSummaryDTO;
 import com.bankapp.CustomerService.service.CustomerServiceImpl;
+import com.bankapp.CustomerService.util.ICustomerServiceConstants;
 
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerServiceController {
 
+	private static final Logger logger = LoggerFactory.getLogger(CustomerServiceController.class);
+
 	@Autowired
 	CustomerServiceImpl customerServiceImpl;
 
-	/*IMPLEMENT OPEN FIEGN TO GET DATA FORM OTHER MNICROSERVICE*/
+	/* IMPLEMENT OPEN FIEGN TO GET DATA FORM OTHER MNICROSERVICE */
 	@GetMapping("/summary/{customerId}")
 	public CustomerSummaryDTO getCustomerSummary(@PathVariable Long customerId) throws NoResourceFoundException {
-	
-		return	customerServiceImpl.getCustomerSummary(customerId);
+		logger.debug("Correlation Id: {} Inside CustomerServiceController.getCustomerSummary");
+		return customerServiceImpl.getCustomerSummary(customerId);
+
 	}
-	
-	
+
 	@PostMapping
 	public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
+		logger.debug("[{}:{}] Inside CustomerServiceController.createCustomer",ICustomerServiceConstants.CorrelationId,MDC.get(ICustomerServiceConstants.CorrelationId));
 		return ResponseEntity.status(HttpStatus.CREATED).body(customerServiceImpl.createCustomer(customerDTO));
 	}
 
